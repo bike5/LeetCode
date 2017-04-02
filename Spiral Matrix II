@@ -1,0 +1,21 @@
+//59. Spiral Matrix II
+
+public class Solution {
+    public int[][] generateMatrix(int n) {
+        if (n < 0) return null;
+        int[][] matrix = new int[n][n];
+        int circle = (n + 1) / 2;
+        int start = 0, row = n, col = n;
+        int[] num = {1};
+        while (start < circle) {
+            generateMatrixHelper(matrix, start++, row--, col--, num);
+        }
+        return matrix;
+    }
+    public void generateMatrixHelper(int[][] matrix, int start, int row, int col, int[] num) {
+        for (int i = start; i < col; i++) matrix[start][i] = num[0]++;
+        for (int i = start + 1; i < row; i++) matrix[i][col - 1] = num[0]++;
+        for (int i = col - 2; i >= start; i--) matrix[row - 1][i] = num[0]++;
+        for (int i = row - 2; i >= start + 1; i--) matrix[i][start] = num[0]++;
+    }
+}
