@@ -1,0 +1,31 @@
+#一个数组中元素取值在0-3之间，求该数组的逆序个数
+public Main{
+    Scanner in = new Scanner(System.in);
+    while (in.hasNext()) {
+        int n = in.nextInt();//元素个数
+        int[] num = new int[n];//元素数组
+        for (int i = 0; i < n; i++) {
+            num[i] = in.nextInt();
+        }
+        Solution res = new Solution();
+        res.inversion(num);
+        
+    }
+}
+
+public Solution {
+    public void inversion(int[] num) {
+        int res = 0;
+        int[] hash = new int[4];//用于存储每个元素的个数
+        for (int n : num) {
+            hash[n]++;
+        }
+        for (int n : num) {
+          for (int i = 0; i < n; i++) {//判断hash数组中比当前值大的键的个数，即为当前值的逆序数
+              res += hash[i];
+          }
+          hash[n]--;//将访问过的值的个数减一
+        }
+        System.out.println(res);
+    }
+}
