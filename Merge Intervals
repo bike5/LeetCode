@@ -1,0 +1,42 @@
+#56. Merge Intervals
+/**
+ *
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ *
+ *1、将原序列按start排序
+ *2、维护两个整数，存放结果的start和end，初始化序列第一个元素的start和end值
+ *3、对序列从头扫描，若当前元素的end值小于维护的start值，将维护的end的值更新（更新为当前元素end值和维护end值的最大值）
+ *   否则将当前维护的start、end对作为一个新元素存储到结果序列中，同时更新当前维护的start、end对
+ 4、扫描完毕后，将当前维护的start、end对作为最后一个元素存储到结果序列中
+ 5、返回结果序列
+ */
+public class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        List<Interval> res = new ArrayList<>();
+        if (intervals == null || intervals.isEmpty()) return res;
+        Collections.sort(intervals, new Comparator<Interval>() {
+            public int compare(Interval l1, Interval l2) {
+                return l1.start - l2.start;
+            }
+        });//对原始序列排序
+        int start = intervals.get(0).start;
+        int end = intervals.get(0).end;
+        for (Interval interval : intervals) {
+            if (end >= interval.start) {
+                end = Math.max(end, interval.end);//更新当前维护的end值
+            } else {
+                res.add(new Interval(start, end));//更新结果序列元素
+                start = interval.start;
+                end = interval.end;//更新当前维护的start、end对
+            }
+        }
+        res.add(new Interval(start, end));//添加最后一个start、end对
+        return res;//返回结果
+    }
+}
