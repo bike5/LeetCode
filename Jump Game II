@@ -1,0 +1,20 @@
+/*45. Jump Game II
+思路：
+    扫描数组，确定当前最远能覆盖的节点，放入maxIndex,然后继续扫描，直到当前的路程超过了上一次算出的覆盖范围，
+    那么更新覆盖范围，同时更新跳数，因为我们是经过了多一跳才能继续前进的
+*/
+public class Solution {
+    public int jump(int[] nums) {
+        if (nums == null || nums.length == 0) return -1;
+        int maxIndex = 0, count = 0, last = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > last) {//超过了上一次算出的覆盖范围
+                last = maxIndex;//更新上一次覆盖范围
+                count++;//跳数增加
+            }
+            maxIndex = Math.max(maxIndex, i + nums[i]);//更新新的覆盖范围
+            
+        }
+        return count;
+    }
+}
