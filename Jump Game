@@ -1,7 +1,11 @@
 /*55. Jump Game
   思路：当前位置为i时，能到达的最远距离maxIndex为i+nums[i],若maxIndex >= nums.length - 1，表明可以到达尾部
         否则，从左到右扫描元素（不超过最远距离），同时更新maxIndex，若扫描元素超过最远距离，永远不可达
-*/
+  或者：jump[i]表示在i位置处能跳的最远距离，若jump[i]>=nums.length - 1，表明可达
+        状态方程为jump[i] = max(i + nums[i], jump[i - 1]) i > 0;
+                         = 0, i == 0;
+        其实对于jump[i]来说，jump[i - 2]已经用不上了，因此可以用一个变量maxIndex来保存jump[i - 1];
+*/    
 public class Solution {
     public boolean canJump(int[] nums) {
         if (nums == null || nums.length == 0) return false;
