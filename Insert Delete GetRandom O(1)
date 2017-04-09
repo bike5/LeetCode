@@ -1,4 +1,14 @@
 #380. Insert Delete GetRandom O(1)
+/*思路： 使用ArrayList存储元素、HashMap判断插入或删除的元素是否存在（键为元素，值为在ArrayList中的索引），Random类中的nextInt()方法产生随机数
+        插入元素时：
+            判断该元素是否为map的键，若是，返回false，否则将其put进map中，值为其在add中的位置索引，同时将该元素add到ArrayList中
+        删除元素时：
+            判断该元素是否为map的键，若不是，返回false，否则，判断该元素是否在对尾，若是，直接删除，若不是，用对尾元素将al中的该元素替换，同时更新map中
+            该对尾元素的位置，删除对尾元素。。。
+        获取随机数：
+            使用Random类中的nextInt方法，获取一个在[0,al.size())范围内的索引，返回al.get(索引)
+*/
+
 public class RandomizedSet {
     private ArrayList<Integer> al;
     private HashMap<Integer, Integer> map;
