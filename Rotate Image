@@ -1,0 +1,73 @@
+#48. Rotate Image
+/*
+思路：一般解法
+        递归处理数组最外层的一圈。
+        处理一圈的过程：
+          将数组左下角的元素作为起始元素，将一圈元素顺序存储到一个一维数组中
+          然后将数组左上角的作为起始位置，依次将一维数组中的元素对一圈中的相应位置进行赋值。
+       特殊解法
+          从上到下对原数组进行翻转，然后将数组做转置
+*/
+
+//一般解法：
+public class Solution {
+    public void rotate(int[][] matrix) {
+        if (matrix == null || matrix.length == 0) return;
+        int m = matrix.length;
+        int circle = (m + 1) / 2;//计算圈数
+        int start = 0;
+        while (start < circle) {
+            rotateHelper(matrix, start++, m--);//递归处理每一圈
+        }
+    }
+    public void rotateHelper(int[][] matrix, int start, int m) {
+        if (m == 1) return;
+        int[] nums = new int[4 * m - 4];//创建一维数组，大小为当前圈的元素个数
+        int index = 0;
+        //该圈最左边一列从下到上存储
+        for (int i = m - 1; i >= start; i--) {
+            nums[index++] = matrix[i][start];
+        }
+        //该圈最上面一行从从左到右存储
+        for (int i = start + 1; i < m; i++) {
+            nums[index++] = matrix[start][i]; 
+        }
+        //该圈最右边一列从上到下存储
+        for (int i = start + 1; i < m; i++) {
+            nums[index++] = matrix[i][m - 1];
+        }
+        //该圈最下面一行从右到左存储
+        for (int i = m - 2; i >= start + 1; i--) {
+            nums[index++] = matrix[m - 1][i];
+        }
+        
+        index = 0;
+        //对该圈最上面一行赋值
+        for (int i = start; i < m; i++) {
+            matrix[start][i] = nums[index++];
+        }
+        //对该圈最右边一列赋值
+        for (int i = start + 1; i < m; i++) {
+            matrix[i][m - 1] = nums[index++];
+            //System.out.println(matrix[i][m - 1]);
+        }
+        //对该圈最下面一行赋值
+        for (int i = m - 2; i >= start; i--) {
+            matrix[m - 1][i] = nums[index++];
+        }
+        //对该圈最左边一列赋值
+        for (int i = m - 2; i >= start + 1; i--) {
+            matrix[i][start] = nums[index++];
+        }
+        
+    }
+    
+}
+//特殊解法
+void rotate(vector<vector<int> > &matrix) {
+    reverse(matrix.begin(), matrix.end());
+    for (int i = 0; i < matrix.size(); ++i) {
+        for (int j = i + 1; j < matrix[i].size(); ++j)
+            swap(matrix[i][j], matrix[j][i]);
+    }
+}
