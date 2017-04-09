@@ -1,0 +1,20 @@
+#442 Find All Duplicates in an Array
+/*思路：
+      //遇到这种元素大小在1-n之间的题目，就得想到元素可以作为下标使用
+      扫描数组，将当前元素的值作为下标所对应的数组元素变为负值，若两个元素相同，则他们会指向同一个元素，因此若指向的元素为负，
+      表明变为该下标的元素是重复的
+*/
+public class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        if (nums == null) return null;
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            int index = Math.abs(nums[i]) - 1;
+            if (nums[index] < 0) {
+                res.add(index + 1);
+            }
+            nums[index] = -nums[index];
+        }
+        return res;
+    }
+}
