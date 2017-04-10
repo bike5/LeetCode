@@ -1,0 +1,24 @@
+#189.Rotate Array
+/*思路：其实就是将以k为分界线的两部分进行交换
+        先整体交换，再对两个部分分别交换
+
+*/
+public void rotate(int[] nums, int k) {
+    k %= nums.length;
+    reverse(nums, 0, nums.length - 1);
+    reverse(nums, 0, k - 1);
+    reverse(nums, k, nums.length - 1);
+}
+
+public void reverse(int[] nums, int start, int end) {
+    while (start < end) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+
+
