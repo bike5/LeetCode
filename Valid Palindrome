@@ -1,0 +1,29 @@
+#125. Valid Palindrome
+/*思路：使用java中Character.isLetterOrDigit()方法判断当前字符是否为alphanumeric
+        设置头尾指针保存当前字符，若均为alphanumeric，判断这两个字符是否相同，相同继续，不同继续循环，若不为alphanumeric，不是的字符的指针移动，
+        继续判断
+*/
+
+public class Solution {
+    public boolean isPalindrome(String s) {
+        if (s == null) return false;
+        if (s.length() <= 1) return true;
+        int start = 0, stop = s.length() - 1;
+        while (start < stop) {
+            char cHead = s.charAt(start);
+            char cTail = s.charAt(stop);
+            if (!Character.isLetterOrDigit(cHead)) {
+                start++;
+                continue;
+            }
+            if (!Character.isLetterOrDigit(cTail)) {
+                stop--;
+                continue;
+            }
+            if (Character.toLowerCase(cHead) != Character.toLowerCase(cTail)) return false;
+            start++;
+            stop--;
+        }
+        return true;
+    }
+}
