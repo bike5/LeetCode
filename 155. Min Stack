@@ -1,0 +1,43 @@
+/*思路：使用一个stack保存数据，min保存最小值
+        进来的元素比min小时，将min值先push进去，即保存第二小的元素，然后push元素
+        pop时，若pop出的元素和min相等，继续pop出一个，作为新的min值
+*/
+public class MinStack {
+    Stack<Integer> stack;
+    int min;
+    /** initialize your data structure here. */
+    public MinStack() {
+        stack = new Stack<>();
+        min = Integer.MAX_VALUE;
+    }
+    
+    public void push(int x) {
+        if (min >= x) {
+            stack.push(min);
+            min = x;
+        }
+        stack.push(x);
+    }
+    
+    public void pop() {
+        if (stack.empty()) return;
+        if (stack.pop() == min) min = stack.pop();
+    }
+    
+    public int top() {
+        return stack.peek();
+    }
+    
+    public int getMin() {
+        return min;
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
