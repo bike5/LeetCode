@@ -1,0 +1,20 @@
+/*思路：
+      使用二分查找，时间复杂度低。
+      对于一个非负数n，它的平方根不会大于n/2+1。
+      二分查找中，有和目标值相等的结果，返回。没有找到，返回第一个小于目标值的结果
+*/
+
+
+public class Solution {
+    public int mySqrt(int x) {
+        if (x <= 0) return 0;
+        int start = 1, end = x / 2 + 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (mid > x / mid) end = mid - 1;
+            else if (mid < x / mid) start = mid + 1;
+            else return mid;
+        }
+        return end;
+    }
+}
