@@ -1,0 +1,24 @@
+/*思路：
+      k不等于0时，遍历去重后的数组（重复的pair无效），若当前元素与k的和在数组中存在，则pair个数加1
+      k等于0时，查看数组中相同的元素有多少对（三个或三个以上相同的看做一对）
+      使用HashMap实现上述操作，key为元素，value为个数
+*/
+public class Solution {
+    public int findPairs(int[] nums, int k) {
+        int res = 0;
+        if (nums == null || nums.length == 0 || k < 0) return res;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+        //Map.Entry<Integer, Integer> entry = map.entry();
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (k == 0) {
+                if (entry.getValue() > 1) res++;
+            } else {
+                if (map.containsKey(entry.getKey() + k)) res++;
+            }
+        }
+        return res;
+    }
+}
